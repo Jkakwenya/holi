@@ -1,43 +1,43 @@
-import { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import './Auth.css';
+import { useState } from "react";
+import { useAuth } from "../../context/useAuth";
+import "./Auth.css";
 
 const Auth = ({ onSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    name: '',
-    userType: 'student'
+    email: "",
+    password: "",
+    name: "",
+    userType: "student",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const { login, signup } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
-    setError('');
+    setError("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     // Basic validation
     if (!formData.email || !formData.password) {
-      setError('Please fill in all required fields');
+      setError("Please fill in all required fields");
       return;
     }
 
-    if (!formData.email.includes('@')) {
-      setError('Please enter a valid email address');
+    if (!formData.email.includes("@")) {
+      setError("Please enter a valid email address");
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError("Password must be at least 6 characters");
       return;
     }
 
@@ -46,14 +46,19 @@ const Auth = ({ onSuccess }) => {
         login(formData.email, formData.password, formData.userType);
       } else {
         if (!formData.name) {
-          setError('Please enter your name');
+          setError("Please enter your name");
           return;
         }
-        signup(formData.email, formData.password, formData.userType, formData.name);
+        signup(
+          formData.email,
+          formData.password,
+          formData.userType,
+          formData.name
+        );
       }
       onSuccess();
     } catch {
-      setError('An error occurred. Please try again.');
+      setError("An error occurred. Please try again.");
     }
   };
 
@@ -69,19 +74,19 @@ const Auth = ({ onSuccess }) => {
 
         <div className="auth-toggle">
           <button
-            className={isLogin ? 'active' : ''}
+            className={isLogin ? "active" : ""}
             onClick={() => {
               setIsLogin(true);
-              setError('');
+              setError("");
             }}
           >
             Login
           </button>
           <button
-            className={!isLogin ? 'active' : ''}
+            className={!isLogin ? "active" : ""}
             onClick={() => {
               setIsLogin(false);
-              setError('');
+              setError("");
             }}
           >
             Sign Up
@@ -136,7 +141,7 @@ const Auth = ({ onSuccess }) => {
                     type="radio"
                     name="userType"
                     value="student"
-                    checked={formData.userType === 'student'}
+                    checked={formData.userType === "student"}
                     onChange={handleChange}
                   />
                   <div className="user-type-card">
@@ -151,7 +156,7 @@ const Auth = ({ onSuccess }) => {
                     type="radio"
                     name="userType"
                     value="professional"
-                    checked={formData.userType === 'professional'}
+                    checked={formData.userType === "professional"}
                     onChange={handleChange}
                   />
                   <div className="user-type-card">
@@ -167,22 +172,22 @@ const Auth = ({ onSuccess }) => {
           {error && <div className="error-message">{error}</div>}
 
           <button type="submit" className="submit-button">
-            {isLogin ? 'Login' : 'Create Account'}
+            {isLogin ? "Login" : "Create Account"}
           </button>
         </form>
 
         <div className="auth-footer">
           <p>
-            {isLogin ? "Don't have an account? " : 'Already have an account? '}
+            {isLogin ? "Don't have an account? " : "Already have an account? "}
             <button
               type="button"
               className="link-button"
               onClick={() => {
                 setIsLogin(!isLogin);
-                setError('');
+                setError("");
               }}
             >
-              {isLogin ? 'Sign up' : 'Login'}
+              {isLogin ? "Sign up" : "Login"}
             </button>
           </p>
         </div>

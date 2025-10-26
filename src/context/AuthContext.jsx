@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContextBase";
 
@@ -76,3 +77,5 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
+// Re-export the hook so existing imports continue to work
+export { useAuth } from "./useAuth";

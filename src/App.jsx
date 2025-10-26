@@ -1,14 +1,18 @@
-import { useState } from 'react';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import Auth from './components/auth/Auth';
-import PersonalityTest from './components/test/PersonalityTest';
-import Results from './components/results/Results';
-import { analyzePersonality, getCareerRecommendations } from './services/personalityService';
-import './App.css';
+import { useState } from "react";
+import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./context/useAuth";
+import Auth from "./components/auth/Auth";
+import PersonalityTest from "./components/test/PersonalityTest";
+import Results from "./components/results/Results";
+import {
+  analyzePersonality,
+  getCareerRecommendations,
+} from "./services/personalityService";
+import "./App.css";
 
 function AppContent() {
   const { user, isAuthenticated, loading, updateTestResults } = useAuth();
-  const [showTest, setShowTest] = useState(false);
+  const [setShowTest] = useState(false);
 
   if (loading) {
     return (
@@ -28,11 +32,11 @@ function AppContent() {
   const handleTestComplete = (answers) => {
     const analysis = analyzePersonality(answers);
     const recommendations = getCareerRecommendations(analysis, user.userType);
-    
+
     updateTestResults({
       analysis,
       recommendations,
-      completedAt: new Date().toISOString()
+      completedAt: new Date().toISOString(),
     });
   };
 
