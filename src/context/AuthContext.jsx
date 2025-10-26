@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { AuthContext } from './useAuth';
+import { useState, useEffect } from "react";
+import { AuthContext } from "./AuthContextBase";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Check if user is logged in (from localStorage)
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -20,13 +20,13 @@ export const AuthProvider = ({ children }) => {
       id: Date.now(),
       email,
       userType, // 'student' or 'professional'
-      name: email.split('@')[0],
+      name: email.split("@")[0],
       createdAt: new Date().toISOString(),
       hasCompletedTest: false,
-      testResults: null
+      testResults: null,
     };
-    
-    localStorage.setItem('user', JSON.stringify(mockUser));
+
+    localStorage.setItem("user", JSON.stringify(mockUser));
     setUser(mockUser);
     return mockUser;
   };
@@ -37,19 +37,19 @@ export const AuthProvider = ({ children }) => {
       id: Date.now(),
       email,
       userType,
-      name: name || email.split('@')[0],
+      name: name || email.split("@")[0],
       createdAt: new Date().toISOString(),
       hasCompletedTest: false,
-      testResults: null
+      testResults: null,
     };
-    
-    localStorage.setItem('user', JSON.stringify(mockUser));
+
+    localStorage.setItem("user", JSON.stringify(mockUser));
     setUser(mockUser);
     return mockUser;
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setUser(null);
   };
 
@@ -57,9 +57,9 @@ export const AuthProvider = ({ children }) => {
     const updatedUser = {
       ...user,
       hasCompletedTest: true,
-      testResults: results
+      testResults: results,
     };
-    localStorage.setItem('user', JSON.stringify(updatedUser));
+    localStorage.setItem("user", JSON.stringify(updatedUser));
     setUser(updatedUser);
   };
 
@@ -70,8 +70,9 @@ export const AuthProvider = ({ children }) => {
     signup,
     logout,
     updateTestResults,
-    isAuthenticated: !!user
+    isAuthenticated: !!user,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
